@@ -1,6 +1,10 @@
+// ignore_for_file: prefer_is_empty
+
 import 'package:flutter/material.dart';
 
 import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
+import 'package:yoursplaces/providers/great_places.dart';
 import 'package:yoursplaces/screens/add_place_screen.dart';
 
 class PlacesListScreen extends StatelessWidget {
@@ -26,8 +30,34 @@ class PlacesListScreen extends StatelessWidget {
               icon: const Icon(Ionicons.location))
         ],
       ),
-      body: const Center(
-        child: null,
+      body: FutureBuilder(
+        future: Provider.of<GreatPlaces>(context, listen: false)
+            .fetchAndSetPlaces(),
+        builder: (ctx, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Consumer<GreatPlaces>(
+                child: const Center(
+                  child: Text('Start adding some'),
+                ),
+                builder: (ctx, greatPlace, ch) => greatPlace.items.length <= 0
+                    ? ch! // include ! for null safety to make sure that you telling dart it will not be a null
+                    : ListView.builder(
+                        itemCount: greatPlace.items.length,
+                        itemBuilder: (ctx, index) => ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage:
+                                FileImage(greatPlace.items[index].image),
+                          ),
+                          title: Text(greatPlace.items[index].title),
+                          onTap: () {
+                            // go to detail screen
+                          },
+                        ),
+                      ),
+              ),
       ),
     );
   }
