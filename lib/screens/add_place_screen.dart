@@ -5,6 +5,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:yoursplaces/providers/great_places.dart';
 import 'package:yoursplaces/widgets/image_input.dart';
+import 'package:yoursplaces/widgets/location_input.dart';
 
 class AddPlaceScreen extends StatefulWidget {
   const AddPlaceScreen({super.key});
@@ -51,10 +52,14 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                     decoration: const InputDecoration(labelText: 'Title'),
                     controller: _titleController,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   ImageInput(_selectImage),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const LocationInput(),
                 ],
               ),
             ),
