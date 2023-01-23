@@ -59,7 +59,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const LocationInput(),
+                  LocationInput(),
                 ],
               ),
             ),
