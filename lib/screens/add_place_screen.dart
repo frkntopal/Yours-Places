@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
+import 'package:yoursplaces/models/place.dart';
 import 'package:yoursplaces/providers/great_places.dart';
 import 'package:yoursplaces/widgets/image_input.dart';
 import 'package:yoursplaces/widgets/location_input.dart';
@@ -18,17 +19,24 @@ class AddPlaceScreen extends StatefulWidget {
 class _AddPlaceScreenState extends State<AddPlaceScreen> {
   final _titleController = TextEditingController();
   File? _pickedImage;
+  PlaceLocation? _placeLocation;
 
   void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
   }
 
+  void _selectPlace(double lat, double lng) {
+    _placeLocation = PlaceLocation(latitude: lat, longitude: lng);
+  }
+
   void _savedPlace() {
-    if (_titleController.text.isEmpty || _pickedImage == null) {
+    if (_titleController.text.isEmpty ||
+        _pickedImage == null ||
+        _placeLocation == null) {
       return;
     }
     Provider.of<GreatPlaces>(context, listen: false)
-        .addPlace(_titleController.text, _pickedImage!);
+        .addPlace(_titleController.text, _pickedImage!,_placeLocation!);
     Navigator.of(context).pop();
   }
 
@@ -59,7 +67,7 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  LocationInput(),
+                  LocationInput(_selectPlace),
                 ],
               ),
             ),

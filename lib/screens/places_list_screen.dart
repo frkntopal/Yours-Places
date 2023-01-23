@@ -46,13 +46,16 @@ class PlacesListScreen extends StatelessWidget {
                     ? ch! // include ! for null safety to make sure that you telling dart it will not be a null
                     : ListView.builder(
                         itemCount: greatPlace.items.length,
-                        itemBuilder: (ctx, index) => ListTile(
+                        itemBuilder: (ctx, i) => ListTile(
                           leading: CircleAvatar(
                             backgroundImage:
-                                FileImage(greatPlace.items[index].image),
+                                FileImage(greatPlace.items[i].image),
                           ),
-                          title: Text(greatPlace.items[index].title),
+                          title: Text(greatPlace.items[i].title),
+                          subtitle:
+                              Text(greatPlace.items[i].location!.address!),
                           onTap: () {
+                            
                             // go to detail screen
                           },
                         ),
