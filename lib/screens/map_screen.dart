@@ -42,7 +42,7 @@ class _MapScreenState extends State<MapScreen> {
                   : () {
                       Navigator.of(context).pop(_pickedLocation);
                     },
-              icon: Icon(Icons.check),
+              icon: const Icon(Icons.check),
             )
         ],
       ),
@@ -56,12 +56,16 @@ class _MapScreenState extends State<MapScreen> {
         ),
         onTap: widget.isSelecting ? _selectLocation : null,
         // ignore: unnecessary_null_comparison
-        markers: _pickedLocation == null
+        markers: (_pickedLocation == null && widget.isSelecting)
             ? {}
             : {
                 Marker(
                   markerId: MarkerId('m1'),
-                  position: _pickedLocation!,
+                  position: _pickedLocation ??
+                      LatLng(
+                        widget.initialLocation.latitude,
+                        widget.initialLocation.longitude,
+                      ),
                 ),
               },
       ),

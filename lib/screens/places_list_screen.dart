@@ -6,6 +6,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 import 'package:yoursplaces/providers/great_places.dart';
 import 'package:yoursplaces/screens/add_place_screen.dart';
+import 'package:yoursplaces/screens/place_detail_screen.dart';
 
 class PlacesListScreen extends StatelessWidget {
   const PlacesListScreen({super.key});
@@ -55,8 +56,10 @@ class PlacesListScreen extends StatelessWidget {
                           subtitle:
                               Text(greatPlace.items[i].location!.address!),
                           onTap: () {
-                            
                             // go to detail screen
+                            Navigator.of(context).pushNamed(
+                                PlaceDetailScreen.routeName,
+                                arguments: greatPlace.items[i].id);
                           },
                         ),
                       ),
